@@ -12,10 +12,27 @@ const App = (props) => {
       <div className="app-wrapper">
         <Header />
         <Navbar />
-        <div class="app-wrapper-content">
+        <div className="app-wrapper-content">
           <Routes>
-            <Route path="/dialogs" element={<Dialogs />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/dialogs/*"
+              element={<Dialogs messagesData={props.reDux.messagesPage} />}
+            />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  postsData={props.reDux.profilePage}
+                  addNewPost={props.addPost}
+                />
+              }
+            />
+          </Routes>
+          <Routes>
+            <Route
+              path="/"
+              element={<Profile postsData={props.reDux.profilePage} />}
+            />
           </Routes>
         </div>
       </div>

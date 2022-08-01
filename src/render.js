@@ -1,0 +1,18 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { addPost } from "./redux/state";
+
+addPost("A 4E?");
+
+export let rerenderEntireTree = (state) => {
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(
+    <React.StrictMode>
+      <App reDux={state} addPost={addPost} />
+    </React.StrictMode>
+  );
+};
+console.log(addPost);
