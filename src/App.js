@@ -16,14 +16,21 @@ const App = (props) => {
           <Routes>
             <Route
               path="/dialogs/*"
-              element={<Dialogs messagesData={props.reDux.messagesPage} />}
+              element={
+                <Dialogs
+                  messagesData={props.reDux.messagesPage}
+                  updateNewMessageText={props.updateNewMessageText}
+                  addMessage={props.addMessage}
+                />
+              }
             />
             <Route
               path="/profile"
               element={
                 <Profile
+                  updateNewPostText={props.updateNewPostText}
                   postsData={props.reDux.profilePage}
-                  addNewPost={props.addPost}
+                  addPost={props.addPost}
                 />
               }
             />
@@ -31,7 +38,13 @@ const App = (props) => {
           <Routes>
             <Route
               path="/"
-              element={<Profile postsData={props.reDux.profilePage} />}
+              element={
+                <Profile
+                  updateNewPostText={props.updateNewPostText}
+                  postsData={props.reDux.profilePage}
+                  addPost={props.addPost}
+                />
+              }
             />
           </Routes>
         </div>

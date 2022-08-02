@@ -18,3 +18,7 @@
 .active {
   color: rgb(22, 155, 212);
 }
+.send {
+  width: 35px;
+  height: 21px;
+}
