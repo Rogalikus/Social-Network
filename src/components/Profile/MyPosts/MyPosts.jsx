@@ -4,11 +4,11 @@ import Post from "./Post/Post";
 
 const MyPosts = (props) => {
   let postsElements = props.postsData.map((p) => (
-    <Post message={p.message} countLike={p.countLike} />
+    <Post message={p.message} key={p.id} countLike={p.countLike} />
   ));
   let newPostElement = React.createRef();
-  let addPost = () => {
-    props.addNewPost();
+  let addOnePost = () => {
+    props.addPost();
   };
 
   let onPostChange = () => {
@@ -25,7 +25,7 @@ const MyPosts = (props) => {
           ref={newPostElement}
           value={props.newPostText}
         />
-        <button onClick={addPost}>
+        <button onClick={addOnePost}>
           <img
             src="https://w7.pngwing.com/pngs/274/656/png-transparent-shipping-mail-envelope-send-letter-post-icon-thumbnail.png"
             width={28}
