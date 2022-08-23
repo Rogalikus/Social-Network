@@ -1,4 +1,3 @@
-import React from "react";
 import Dialogs from "./Dialogs";
 import {
   addMessageActionCreator,
@@ -11,6 +10,7 @@ let mapStateToProps = (state) => {
     dialogsData: state.messagesPage.dialogsData,
     messagesData: state.messagesPage.messagesData,
     newMessagesData: state.messagesPage.newMessagesData,
+    isAuth: state.auth.isAuth,
   };
 };
 let mapDispatchToProps = (dispatch) => {

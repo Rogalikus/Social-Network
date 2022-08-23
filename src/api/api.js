@@ -25,3 +25,15 @@ export const dropFollow = (id) => {
     return response.data;
   });
 };
+export const getProfile = (userId) => {
+  return instance.get(`profile/` + userId).then((response) => {
+    return response.data;
+  });
+};
+export const authAPI = {
+  me() {
+    return instance.get(`auth/me`).then((response) => {
+      return response.data;
+    });
+  },
+};
