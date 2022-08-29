@@ -10,6 +10,8 @@ import {
 import UsersPureComp from "./UsersPureComp";
 import Preloader from "./../Preloader/Preloader";
 import { Navigate } from "react-router-dom";
+import { compose } from "redux";
+import { withAuthRedirect } from "./../../hoc/withAuthRedirect";
 
 class UsersClassComp extends React.Component {
   componentDidMount() {
@@ -38,7 +40,6 @@ class UsersClassComp extends React.Component {
   };
 
   render() {
-    if (!this.props.isAuth) return <Navigate to={"/login"} />;
     return (
       <>
         {this.props.isFetching ? (
@@ -68,19 +69,21 @@ const mapStateToProps = (state) => {
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
     followingInProgress: state.usersPage.followingInProgress,
-    isAuth: state.auth.isAuth,
   };
 };
 
-const UserContainer = connect(mapStateToProps, {
-  follow,
-  unfollow,
-  setCurrentPage,
-  toggleFollowingProgress,
-  thunkUsers,
-})(UsersClassComp);
+// const UserContainer = UsersClassComp;
 
-export default UserContainer;
+export default compose(
+  connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setCurrentPage,
+    toggleFollowingProgress,
+    thunkUsers,
+  }),
+  withAuthRedirect
+)(UsersClassComp);
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {

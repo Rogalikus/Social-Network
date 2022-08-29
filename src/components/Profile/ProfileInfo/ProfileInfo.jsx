@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ProfileInfo.module.css";
 import Preloader from "./../../Preloader/Preloader";
 import kavo from "../../img/kavo.jpg";
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -19,8 +20,13 @@ const ProfileInfo = (props) => {
         </a>
       </div>
       <div className={styles.desciptionBlock}>
-        <img src={props.profile.photos.large} alt="4to-to" />
-        ava+ descr
+        <img src={props.profile.photos.large} />
+      </div>
+      <div>
+        <ProfileStatus
+          status={props.status}
+          updateStatus={props.updateStatus}
+        />
       </div>
     </div>
   );

@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import { Navigate } from "react-router-dom";
-
+import { Formik, Form, Field } from "formik";
+//key={message.id} key={dialog.id}
 const Dialogs = (props) => {
   let dialogsElements = props.dialogsData.map((dialog) => (
     <DialogItem name={dialog.name} key={dialog.id} id={dialog.id} />
@@ -20,23 +20,59 @@ const Dialogs = (props) => {
     props.updateNewMessageText(text);
   };
 
-  if (!props.isAuth) return <Navigate to={"/login"} />;
-
   return (
     <div>
       <div className={styles.dialogs}>
         <div className={styles.dialogsItems}>{dialogsElements}</div>
         <div className={styles.messages}>
           {messagesElements}
-          <textarea
-            className={styles.textarea}
-            onChange={onMessageChange}
-            value={newMessagesData}
-          ></textarea>
-          <button className={styles.send} onClick={newOneMessage}></button>
+          <DialogsBody newMessage={props.newMessage} />
         </div>
+        {/* <textarea
+          className={styles.textarea}
+          onChange={onMessageChange}
+          value={newMessagesData}
+        ></textarea>
+        <button className={styles.send} onClick={newOneMessage}></button> */}
       </div>
-      <div></div>
+    </div>
+  );
+};
+
+const DialogsBody = (props) => {
+  let addNewMessage = (values) => {
+    props.newMessage(values.newMessagesData);
+  };
+  // function newOneMessage(values) {
+  //   debugger;
+  //   props.newMessage(values.newMessagesData);
+  // }
+  // function onMessageChange(values) {
+  //   let text = values.newMessagesData.target.value;
+  //   props.updateNewMessageText(text);
+  // }
+  return (
+    <div>
+      <Formik
+        initialValues={{ newMessagesData: "" }}
+        onSubmit={(values, { resetForm }) => {
+          addNewMessage(values.newMessagesData);
+          resetForm({ values: "" });
+        }}
+      >
+        {() => (
+          <Form>
+            <div>
+              <Field
+                type="textarea"
+                name="newMessagesData"
+                placeholder="Horosho"
+              />
+            </div>
+            <button type="submit">send</button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

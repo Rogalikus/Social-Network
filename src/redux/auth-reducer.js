@@ -1,6 +1,8 @@
 import { authAPI } from "./../api/api";
 
 const SET_USER_DATA = "SET_USER_DATA";
+const PROCESS_SIGN_UP = "PROCESS_SIGN_UP";
+const LEAVING_SITE = "LEAVING_SITE";
 
 let initialState = {
   id: null,
@@ -17,7 +19,18 @@ const authReducer = (state = initialState, action) => {
         ...action.data,
         isAuth: true,
       };
-
+    case PROCESS_SIGN_UP:
+      return {
+        ...state,
+        email: action.email,
+        password: action.password,
+        rememberMe: action.rememberMe,
+      };
+    case LEAVING_SITE:
+      return {
+        ...state,
+        userId: action.id,
+      };
     default:
       return state;
   }
@@ -25,6 +38,16 @@ const authReducer = (state = initialState, action) => {
 export const setUserData = (id, email, login) => ({
   type: SET_USER_DATA,
   data: { id, email, login },
+});
+export const auThorize = (email, password, rememberMe) => ({
+  type: PROCESS_SIGN_UP,
+  email,
+  password,
+  rememberMe,
+});
+export const leaveSite = (userId) => ({
+  type: LEAVING_SITE,
+  userId,
 });
 
 export const getAuthUserData = () => (dispatch) => {
@@ -35,4 +58,17 @@ export const getAuthUserData = () => (dispatch) => {
     }
   });
 };
+export const signIn = () => (dispatch) => {
+  authAPI.signIn().then((values) => {
+    if (values === 0) {
+      dispatch(auThorize(values));
+    }
+  });
+};
+export const logOut = () => (dispatch) => {
+  authAPI.logOut().then((data) => {
+    dispatch(leaveSite(data.data));
+  });
+};
+
 export default authReducer;

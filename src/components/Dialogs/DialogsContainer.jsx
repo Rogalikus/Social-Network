@@ -4,13 +4,14 @@ import {
   updateNewMessageTextActionCreator,
 } from "../../redux/dialogs-reducer";
 import { connect } from "react-redux";
+import { withAuthRedirect } from "./../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 let mapStateToProps = (state) => {
   return {
     dialogsData: state.messagesPage.dialogsData,
     messagesData: state.messagesPage.messagesData,
     newMessagesData: state.messagesPage.newMessagesData,
-    isAuth: state.auth.isAuth,
   };
 };
 let mapDispatchToProps = (dispatch) => {
@@ -23,8 +24,11 @@ let mapDispatchToProps = (dispatch) => {
     },
   };
 };
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-export default DialogsContainer;
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withAuthRedirect
+)(Dialogs);
 
 // const DialogsContainer = () => {
 //   return (

@@ -14,7 +14,6 @@ let initialState = {
     { id: 3, text: "Ladno(" },
     { id: 4, text: "Y menya bolshe,Belarus" },
   ],
-  newMessagesData: "Sho hochesh?",
 };
 
 export const dialogsReducer = (state = initialState, action) => {
@@ -22,13 +21,12 @@ export const dialogsReducer = (state = initialState, action) => {
     //this._addMessage
     case ADD_MESSAGE:
       let newMessage = {
-        id: 5,
-        text: state.newMessagesData,
+        id: 6,
+        text: action.newMessagesData,
       };
       return {
         ...state,
         messagesData: [...state.messagesData, newMessage],
-        newMessagesData: "",
       };
     case UPDATE_NEW_MESSAGE_TEXT:
       //this._updateNewMessageText
@@ -40,9 +38,10 @@ export const dialogsReducer = (state = initialState, action) => {
       return state;
   }
 };
-export const addMessageActionCreator = () => {
+export const addMessageActionCreator = (newMessagesData) => {
   return {
     type: ADD_MESSAGE,
+    newMessagesData,
   };
 };
 export const updateNewMessageTextActionCreator = (text) => {
