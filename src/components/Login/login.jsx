@@ -2,6 +2,9 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import s from "./login.module.css";
+import { connect } from "react-redux";
+import { signIn } from "./../../redux/auth-reducer";
+import { Navigate } from "react-router-dom";
 
 const loginFormSchema = Yup.object({
   email: Yup.string().email("Invalid e-mail").required("Required"),
@@ -11,14 +14,17 @@ const loginFormSchema = Yup.object({
 });
 
 const Login = (props) => {
+  if (props.isAuth) {
+    return <Navigate to={"/profile"} />;
+  }
   return (
     <div className={s.login}>
       <h1>Login</h1>
       <Formik
-        initialValues={{ email: "", password: "", rememberMe: false }}
+        initialValues={{ email: "", password: "", rememberMe: "" }}
         validationSchema={loginFormSchema}
         onSubmit={(values) => {
-          props.logIn(values);
+          props.signIn(values.email, values.password, values.rememberMe);
         }}
       >
         {() => (
@@ -42,8 +48,10 @@ const Login = (props) => {
     </div>
   );
 };
-
-export default Login;
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth,
+});
+export default connect(mapStateToProps, { signIn })(Login);
 
 // export const Login = (props) => {
 //   return (

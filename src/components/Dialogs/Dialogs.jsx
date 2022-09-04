@@ -11,14 +11,6 @@ const Dialogs = (props) => {
   let messagesElements = props.messagesData.map((message) => (
     <Message text={message.text} key={message.id} id={message.id} />
   ));
-  const newMessagesData = props.newMessagesData;
-  let newOneMessage = () => {
-    props.newMessage();
-  };
-  let onMessageChange = (e) => {
-    let text = e.target.value;
-    props.updateNewMessageText(text);
-  };
 
   return (
     <div>
@@ -28,12 +20,6 @@ const Dialogs = (props) => {
           {messagesElements}
           <DialogsBody newMessage={props.newMessage} />
         </div>
-        {/* <textarea
-          className={styles.textarea}
-          onChange={onMessageChange}
-          value={newMessagesData}
-        ></textarea>
-        <button className={styles.send} onClick={newOneMessage}></button> */}
       </div>
     </div>
   );
@@ -41,16 +27,8 @@ const Dialogs = (props) => {
 
 const DialogsBody = (props) => {
   let addNewMessage = (values) => {
-    props.newMessage(values.newMessagesData);
+    props.newMessage(values);
   };
-  // function newOneMessage(values) {
-  //   debugger;
-  //   props.newMessage(values.newMessagesData);
-  // }
-  // function onMessageChange(values) {
-  //   let text = values.newMessagesData.target.value;
-  //   props.updateNewMessageText(text);
-  // }
   return (
     <div>
       <Formik
