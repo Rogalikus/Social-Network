@@ -1,7 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { Component } from "react";
 
 export const withAuthRedirect = (Component) => {
   class RedirectComponent extends React.Component {

@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 const Header = (props) => {
-  debugger;
   return (
     <header className={styles.header}>
       <img src="../rog.png" alt="Rogalik" />

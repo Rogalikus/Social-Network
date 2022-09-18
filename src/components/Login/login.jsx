@@ -13,8 +13,8 @@ const loginFormSchema = Yup.object({
     .required("Required"),
 });
 
-const Login = (props) => {
-  if (props.isAuth) {
+const Login = ({ signIn, isAuth }) => {
+  if (isAuth) {
     return <Navigate to={"/profile"} />;
   }
   return (
@@ -24,7 +24,7 @@ const Login = (props) => {
         initialValues={{ email: "", password: "", rememberMe: "" }}
         validationSchema={loginFormSchema}
         onSubmit={(values) => {
-          props.signIn(values.email, values.password, values.rememberMe);
+          signIn(values.email, values.password, values.rememberMe);
         }}
       >
         {() => (
