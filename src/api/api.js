@@ -51,7 +51,7 @@ export const profileAPI = {
     });
   },
   saveProfile(profile) {
-    return instance.put(`profile`, profile);
+    return instance.put("profile", profile).then((response) => response.data);
   },
 };
 
@@ -61,15 +61,23 @@ export const authAPI = {
       return response.data;
     });
   },
-  signIn(email, password, rememberMe = false) {
+  signIn(email, password, rememberMe = false, captcha = null) {
     return instance
-      .post(`auth/login`, { email, password, rememberMe })
+      .post(`auth/login`, { email, password, rememberMe, captcha })
       .then((response) => {
         return response.data;
       });
   },
   logOut() {
     return instance.delete(`auth/login`).then((response) => {
+      return response.data;
+    });
+  },
+};
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return instance.get("security/get-captcha-url").then((response) => {
       return response.data;
     });
   },

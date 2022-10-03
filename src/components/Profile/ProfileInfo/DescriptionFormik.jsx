@@ -1,44 +1,20 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const DesciptionFormik = (props) => {
-  const saveProfile = (values) => {
-    props.saveProfile(values);
-  };
+  console.log(props.error);
+  const saveProfile = props.saveProfile;
+  const offEditMode = props.offEditMode;
+  if (props.error.length > 0) {
+  }
   return (
     <div>
       <Formik
-        initialValues={{
-          //   props.profile
-          fullName: "",
-          lookingForAJob: "",
-          lookingForAJobDescription: "",
-          aboutMe: "",
-          facebook: "",
-          website: "",
-          vk: "",
-          twitter: "",
-          instagram: "",
-          youtube: "",
-          github: "",
-          mainLink: "",
-        }}
+        initialValues={props.profile}
         onSubmit={(values) => {
-          saveProfile(
-            // values.profile
-            values.fullName,
-            values.lookingForAJob,
-            values.lookingForAJobDescription,
-            values.aboutMe,
-            values.facebook,
-            values.github,
-            values.instagram,
-            values.mainLink,
-            values.twitter,
-            values.vk,
-            values.website,
-            values.youtube
-          );
+          saveProfile(values).then(() => {
+            offEditMode();
+          });
         }}
       >
         {() => (
@@ -60,30 +36,25 @@ const DesciptionFormik = (props) => {
               <Field type="textarea" name="aboutMe" placeholder="About me" />
             </div>
             <div>
-              <Field type="input" name="facebook" placeholder="Facebook" />
-            </div>
-            <div>
-              <Field type="input" name="website" placeholder="Website" />
-            </div>
-            <div>
-              <Field type="input" name="vk" placeholder="Vk" />
-            </div>
-            <div>
-              <Field type="input" name="twitter" placeholder="Twitter" />
-            </div>
-            <div>
-              <Field type="input" name="instagram" placeholder="Instagram" />
-            </div>
-            <div>
-              <Field type="input" name="youtube" placeholder="Youtube " />
-            </div>
-            <div>
-              <Field type="input" name="github" placeholder="Github" />
-            </div>
-            <div>
-              <Field type="input" name="mainLink" placeholder="Main Link" />
+              <b>Contacts</b>:
+              {Object.keys(props.profile.contacts).map((key) => {
+                return (
+                  <div key={key}>
+                    <b>
+                      {key}:
+                      <Field
+                        type="input"
+                        name={"contacts." + key}
+                        placeholder={key}
+                      />
+                    </b>
+                  </div>
+                );
+              })}
             </div>
             <button type="submit">Save</button>
+            <div>{props.error ? <p>{props.error}</p> : !props.error}</div>
+            {/* <ErrorMessage name="editMode" component={props.error} /> */}
           </Form>
         )}
       </Formik>

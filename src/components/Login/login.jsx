@@ -13,7 +13,7 @@ const loginFormSchema = Yup.object({
     .required("Required"),
 });
 
-const Login = ({ signIn, isAuth }) => {
+const Login = ({ signIn, isAuth, captchaURL }) => {
   if (isAuth) {
     return <Navigate to={"/profile"} />;
   }
@@ -21,10 +21,20 @@ const Login = ({ signIn, isAuth }) => {
     <div className={s.login}>
       <h1>Login</h1>
       <Formik
-        initialValues={{ email: "", password: "", rememberMe: "" }}
+        initialValues={{
+          email: "",
+          password: "",
+          rememberMe: "",
+          captchaURL: "",
+        }}
         validationSchema={loginFormSchema}
         onSubmit={(values) => {
-          signIn(values.email, values.password, values.rememberMe);
+          signIn(
+            values.email,
+            values.password,
+            values.rememberMe,
+            values.captchaURL
+          );
         }}
       >
         {() => (
@@ -42,6 +52,12 @@ const Login = ({ signIn, isAuth }) => {
               <label htmlFor="rememberMe">remember me</label>
             </div>
             <button type="submit">Log in</button>
+            <div>{captchaURL && <img src={captchaURL} />}</div>
+            <div>
+              {captchaURL && (
+                <Field type="input" name="captchaURL" placeholder="Captcha" />
+              )}
+            </div>
           </Form>
         )}
       </Formik>
@@ -50,6 +66,7 @@ const Login = ({ signIn, isAuth }) => {
 };
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
+  captchaURL: state.auth.captchaURL,
 });
 export default connect(mapStateToProps, { signIn })(Login);
 

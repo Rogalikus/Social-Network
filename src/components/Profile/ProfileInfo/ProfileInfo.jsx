@@ -35,8 +35,12 @@ const ProfileInfo = (props) => {
       <div>
         {editMode ? (
           <DesciptionFormik
+            error={props.error}
             profile={props.profile}
             saveProfile={props.saveProfile}
+            offEditMode={() => {
+              setEditMode(false);
+            }}
           />
         ) : (
           <DesciptionBlock
@@ -74,7 +78,6 @@ const DesciptionBlock = (props) => {
           {props.profile.lookingForAJobDescription}
         </div>
       )}
-
       <div>
         <b>About me</b>: {props.profile.aboutMe}
       </div>
@@ -92,7 +95,7 @@ const DesciptionBlock = (props) => {
       </div>
       {props.isOwner && (
         <div>
-          <button onClick={props.toEditMode}>Edit</button>{" "}
+          <button onClick={props.toEditMode}>Edit</button>
         </div>
       )}
     </div>

@@ -7,6 +7,7 @@ const SET_STATUS = "SET_STATUS";
 const DELETE_POST = "DELETE_POST";
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 const SAVE_PROFILE_SUCCESS = "SAVE_PROFILE_SUCCESS";
+const SHOW_ERROR = "SHOW_ERROR";
 
 let initialState = {
   postsData: [
@@ -15,6 +16,7 @@ let initialState = {
   ],
   profile: null,
   status: "",
+  error: [],
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -54,6 +56,11 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         profile: action.profile,
       };
+    case SHOW_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     default:
       return state;
   }
@@ -74,6 +81,9 @@ export const getUserProfile = (userId) => async (dispatch) => {
 export const setStatus = (status) => {
   return { type: SET_STATUS, status };
 };
+export const showError = (error) => {
+  return { type: SHOW_ERROR, error };
+};
 export const deletePost = (postId) => {
   return { type: DELETE_POST, postId };
 };
@@ -88,10 +98,12 @@ export const getStatus = (userId) => async (dispatch) => {
   dispatch(setStatus(responce.data));
 };
 export const updateStatus = (status) => async (dispatch) => {
-  let response = await profileAPI.updateStatus(status);
-  if (response.data.resultCode === 0) {
-    dispatch(setStatus(status));
-  }
+  try {
+    let response = await profileAPI.updateStatus(status);
+    if (response.data.resultCode === 0) {
+      dispatch(setStatus(status));
+    }
+  } catch (error) {}
 };
 export const savePhoto = (file) => async (dispatch) => {
   let response = await profileAPI.savePhoto(file);
@@ -100,10 +112,15 @@ export const savePhoto = (file) => async (dispatch) => {
   }
 };
 export const saveProfile = (profile) => async (dispatch, getState) => {
+  let data = await profileAPI.saveProfile(profile);
+
   const userId = getState().auth.id;
-  let response = await profileAPI.saveProfile(profile);
-  if (response.data.resultCode === 0) {
+
+  if (data.resultCode === 0) {
     dispatch(getUserProfile(userId));
+  } else if (data.resultCode === 1) {
+    dispatch(showError(data.messages));
   }
 };
+
 export default profileReducer;

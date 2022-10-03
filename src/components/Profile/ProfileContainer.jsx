@@ -52,6 +52,7 @@ const mapStateToProps = (state) => ({
   status: state.profilePage.status,
   authUserId: state.auth.id,
   isAuth: state.auth.isAuth,
+  error: state.profilePage.error,
 });
 
 function withRouter(ProfileContainer) {
