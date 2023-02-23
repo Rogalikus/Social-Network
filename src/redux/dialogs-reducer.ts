@@ -1,5 +1,3 @@
-const ADD_MESSAGE = "ADD-MESSAGE";
-
 export type DialogType = {
   id: number;
   name: string;
@@ -13,15 +11,15 @@ export type MessageType = {
 let initialState = {
   dialogsData: [
     { id: 1, name: "Ukrainets" },
-    { id: 2, name: "Belarus" },
-    { id: 3, name: "Moskal" },
-    { id: 4, name: "Negr" },
+    // { id: 2, name: "Belarus" },
+    // { id: 3, name: "Moskal" },
+    // { id: 4, name: "Negr" },
   ] as Array<DialogType>,
   messagesData: [
     { id: 1, text: "Pishov Nahui,Moskal" },
-    { id: 2, text: "Ne stop, dai hui otsosy, potom idi kyda ho4esh" },
-    { id: 3, text: "Ladno(" },
-    { id: 4, text: "Y menya bolshe,Belarus" },
+    // { id: 2, text: "Ne stop, dai hui otsosy, potom idi kyda ho4esh" },
+    // { id: 3, text: "Ladno(" },
+    // { id: 4, text: "Y menya bolshe,Belarus" },
   ] as Array<MessageType>,
 };
 

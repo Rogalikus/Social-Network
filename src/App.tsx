@@ -19,6 +19,7 @@ import {
   SettingOutlined,
   TeamOutlined,
   UserOutlined,
+  WechatOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
@@ -102,6 +103,14 @@ const items: MenuItem[] = [
       <TeamOutlined />
     </NavLink>
   ),
+  getItem(
+    "Chat",
+    "7",
+    <NavLink to="/chat">
+      {" "}
+      <WechatOutlined />
+    </NavLink>
+  ),
 ];
 
 class App extends React.Component<PropsAppType & ThunkAppType> {
@@ -127,7 +136,7 @@ class App extends React.Component<PropsAppType & ThunkAppType> {
     return (
       <Layout>
         <Sider>
-          <div className="logo" />
+          <div className="logo" style={{ marginTop: 60 }} />
           <Menu
             items={items}
             theme="dark"
@@ -164,7 +173,7 @@ class App extends React.Component<PropsAppType & ThunkAppType> {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
+            Design ©2022 Created by Rogalik
           </Footer>
         </Layout>
       </Layout>

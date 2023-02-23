@@ -41,7 +41,13 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
       </div> */}
       <div className={styles.desciptionBlock}>
         <img src={props.profile.photos.large || photo} alt="avatar" />
-        {props.isOwner && <input type={"file"} onChange={mainPhotoSelected} />}
+        {props.isOwner && (
+          <input
+            style={{ display: "flex", padding: 20 }}
+            type={"file"}
+            onChange={mainPhotoSelected}
+          />
+        )}
       </div>
       <div>
         {editMode ? (
